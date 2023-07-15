@@ -1,0 +1,17 @@
+11,12c11
+< import os
+---
+> import warnings
+158,159d156
+<     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) 
+<     
+179,180c176
+<             threshold_path = os.path.join(__location__, cmd_args.thresholds_file)
+<             thresholds = load_thresholds(threshold_path)
+---
+>             thresholds = load_thresholds(cmd_args.thresholds_file)
+190,191c186
+<             checkpoint_path = os.path.join(__location__, cmd_args.task + ".pth")
+<             load_checkpoint(net, checkpoint_path)
+---
+>             load_checkpoint(net, "./" + cmd_args.task + ".pth")

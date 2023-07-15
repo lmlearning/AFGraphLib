@@ -1,0 +1,70 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: AFGCN2.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: IEEEtran.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: references.bib
+Repeated entry---line 2523 of file references.bib
+ : @article{Charwat2015
+ :                     ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 3975 of file references.bib
+ : 
+ : @article{,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--entry type for "malmqvist2022" isn't style-file defined
+--line 4009 of file references.bib
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 8 entries,
+            4087 wiz_defined-function locations,
+            876 strings with 8817 characters,
+and the built_in function-call counts, 5219 in all, are:
+= -- 421
+> -- 123
+< -- 33
++ -- 67
+- -- 23
+* -- 258
+:= -- 872
+add.period$ -- 16
+call.type$ -- 8
+change.case$ -- 8
+chr.to.int$ -- 78
+cite$ -- 8
+duplicate$ -- 377
+empty$ -- 401
+format.name$ -- 28
+if$ -- 1178
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 64
+newline$ -- 57
+num.names$ -- 8
+pop$ -- 156
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 393
+stack$ -- 0
+substring$ -- 187
+swap$ -- 285
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 8
+warning$ -- 0
+while$ -- 23
+width$ -- 9
+write$ -- 107
+(There were 2 error messages)

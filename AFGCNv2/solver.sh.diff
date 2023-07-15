@@ -1,0 +1,8 @@
+52,54c52,54
+<     DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd) 
+<     SOLVER="solver.py"
+<     python -W ignore::UserWarning: "$DIR"/"$SOLVER"  --filepath $fileinput --task $task --argument $additional 
+---
+>     DIR="./"
+>     SOLVER="./solver.py"
+>     python -W ignore::UserWarning: $SOLVER --filepath $fileinput --task $task --argument $additional 

@@ -1,0 +1,88 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{AFGCN v2: A GCN-based Approximate Solver}
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Lars Malmqvist}
+\IEEEauthorblockA{\textit{Department of Computer Science} \\
+\textit{University of York}\\
+York, UK\\
+lars.malmqvist@york.ac.uk}
+}
+
+\maketitle
+
+\begin{abstract}
+	AFGCN v2 is an approximate abstract argumentation solver that computes the credulous or skeptical acceptance of arguments using an approximation method based on a Graph Convolutional Network model. This model is trained on a dataset derived from various competitions, utilizing a randomized training regime designed to maximize generalization. At runtime, the solver employs a Python script to calculate input features, including the grounded extension and additional graph-based properties, and then uses the GCN model to infer the acceptability status of arguments. AFGCN v2 builds upon previous work on approximating the acceptability of abstract arguments by introducing improvements to the input features used for approximation.
+\end{abstract}
+
+\begin{IEEEkeywords}
+abstract argumentation, GCN, ICCMA
+\end{IEEEkeywords}
+
+
+\section{Introduction}
+Abstract Argumentation is a formalism for non-monotonic reasoning that focuses on the representation of conflict. It is typically represented as a directed graph, where vertices denote arguments and edges indicate a relation of attack. This leads to various reasoning problems that determine the acceptability of arguments or the joint acceptability of sets of arguments. Most of these reasoning problems are known to be NP-hard \cite{Charwat2015,Woltran2014}.
+
+The AFGCN v2 approximate abstract argumentation solver employs a Graph Convolutional Network, a subclass of Convolutional Graph Neural Networks \cite{Wu2020}, to compute approximate solutions for the credulous or skeptical acceptability of arguments in a given abstract argumentation framework. The model has been trained on a dataset consisting of argumentation frameworks from past competitions using a randomized training methodology that aims to maximize generalization from the input frameworks. Moreover, the solver uses the precomputed grounded extension as an input feature for the neural network to expedite computation and slightly enhance accuracy. The solver also applies a configurable probability threshold that can vary according to the semantic and framework size for increased runtime accuracy.
+
+\section{Approximating Argumentation Frameworks Using Convolutional Graph Neural Networks}
+\label{sec:headings}
+Convolutional Graph Neural Networks \cite{Wu2020} (CGNNs) build on the success and popularity of traditional Convolutional Neural Networks, which define the state of the art in several subfields of deep learning, particularly in computer vision. However, there are various methods for defining the convolutional operation when applied to graphs, resulting in different types of CGNNs. The most common approach is based on digital signal processing, where convolution is essentially a noise removal operation. This is also the approach adopted by the groundbreaking Graph Convolutional Network (GCN) by Kipf and Welling \cite{Kipf2016}, which is the architecture that AFGCN v2 adapts for approximating the acceptability of abstract arguments.
+
+The core GCN architecture has been extended using deep residual connections between layers, input features based on the grounded extension, and a randomized training regime that continuously shuffles both the frameworks to predict and the values within those frameworks to improve generalization. AFGCN v2 is built upon previsou work by Malmqvist et al \cite{malmqvistafgcn, malmqvist2022}.
+
+The key components of the GCN architecture used include the following elements:
+\begin{enumerate}
+	\item Randomized input features combined with input features generated from the grounded extension of the argumentation framework and input features based on graph properties
+	\item An input layer receiving these inputs
+	\item 4 repeating blocks of a GCN layer \cite{Kipf2016} and a Dropout layer \cite{JMLR:v15:srivastava14a}
+	\item Residual connections feeding the original features and the normalized adjacency matrix as additional input at each block
+	\item A Sigmoid output layer generating a probability for the acceptability of each argument in the framework
+\end{enumerate}
+The model was trained using Adam \cite{Kingma2015} with Binary Cross-Entropy as the loss function and a variable learning rate. The training regime employed a combination of randomized training batches, dynamic rebalancing of the training data, and automated outlier exclusion to prevent overfitting and achieve a high degree of accuracy.
+
+\subsection{Input Features}
+AFGCN v2 incorporates input features by including the grounded extension as an input along with randomly initialized features. In addition to these, the AFGCN v2 solver incorporates a set of new features derived from various graph properties. The new features are calculated using the following graph metrics: graph coloring, PageRank, closeness centrality, eigenvector centrality, in-degrees, and out-degrees.
+
+Graph coloring assigns a color to each node in the graph such that no two adjacent nodes share the same color. PageRank is an algorithm that measures the importance of nodes in the graph, assigning a higher rank to more central nodes. Closeness centrality is a measure of the degree to which a node is central in the graph, and it is calculated as the reciprocal of the sum of the shortest path distances between the node and all other nodes in the graph. Eigenvector centrality assigns a relative score to each node based on the principle that connections to high-scoring nodes contribute more to the score of the node in question than connections to low-scoring nodes. In-degrees and out-degrees represent the number of edges pointing towards and away from a node, respectively.
+
+These raw features are computed for each node in the graph, and a feature vector is created by concatenating the values of each metric. To ensure that the features are on a comparable scale, the feature vectors are normalized using a standard scaler, which transforms the data such that it has zero mean and unit variance. The resulting normalized features are then used as input to the GCN model, providing a richer representation of the graph structure and potentially improving the solver's performance in approximating argument acceptability.
+
+\section{Implementation}
+\subsection{Design of the Solver}
+The chosen model for the final solver runtime is a 4-layer model with 128 features per layer. It was trained on a dataset containing instances from various ICCMA competitions.
+
+The solver has been developed using the Python programming language, leveraging the Pytorch framework for training and modeling, the Deep Graph Library for graph representation, and Numpy for numerical computation.
+
+At runtime, the solver is invoked using a shell script wrapper that conforms to the specifications. This shell script calls a Python script that loads the relevant parameters into the GCN model based on the semantic in question. It then precomputes the grounded extension using a Numpy-based grounded solver and passes this information along with a random input feature to the GCN model for inference.
+
+The output of the inference step is then passed to a probability threshold function, which applies a threshold for acceptance that is adapted to the size of the argumentation framework and the semantic under consideration. The solver calculates the acceptability status of all arguments in the argumentation framework in parallel during the inference step, but to conform with the solver specification, it only outputs the predicted status for the particular argument under consideration.
+
+\subsection{Competition Specific Information}
+The solver implements functionality for the approximate track. It is not submitted for any other tracks.
+Within the implements functionality for five included semantics: CO, PR, ST, SST, STG, and ID.
+
+Both problem types (DC and DS) are supported for CO, PR, ST, SST, and STG
+semantics. For the ID semantic, DS is supported.
+
+The solver can be called in the following manner:
+
+\texttt{python -W ignore::UserWarning: afgcn\_solve.py --filepath=<file> --task=<problem\_type> --argument=<argument\_num>}
+
+Example:
+\texttt{
+python -W ignore::UserWarning: afgcn\_solve.py --filepath=testaf1.txt --task=DS-PR --argument=4}
+\bibliographystyle{IEEEtran}
+\bibliography{references} 
+\end{document}

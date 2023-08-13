@@ -1,1 +1,8 @@
+*.tgf* filter=lfs diff=lfs merge=lfs -text
+*.tgf filter=lfs diff=lfs merge=lfs -text
+*.EE-CO filter=lfs diff=lfs merge=lfs -text
+*.EE-STG filter=lfs diff=lfs merge=lfs -text
+*.EE-SST filter=lfs diff=lfs merge=lfs -text
+*.EE-PR filter=lfs diff=lfs merge=lfs -text
+*.tgf.txt filter=lfs diff=lfs merge=lfs -text
 *tgf* filter=lfs diff=lfs merge=lfs -text

@@ -5,4 +5,6 @@
 *.EE-SST filter=lfs diff=lfs merge=lfs -text
 *.EE-PR filter=lfs diff=lfs merge=lfs -text
 *.tgf.txt filter=lfs diff=lfs merge=lfs -text
+*.EE-ST filter=lfs diff=lfs merge=lfs -text
+*.EE-SSST filter=lfs diff=lfs merge=lfs -text
 *tgf* filter=lfs diff=lfs merge=lfs -text

@@ -20,6 +20,19 @@ Start with the [model code](GraphLib/model.py) to inspect the architecture or th
 - [FastAFGCN](https://github.com/lmlearning/FastAFGCN): quantized ONNX inference.
 - [AFSubsample](https://github.com/lmlearning/AFSubsample): framework subsampling and analysis.
 
+## Component tests
+
+```bash
+python -m pip install pytest
+python -m pytest tests
+```
+
+The device-transfer helper is isolated in `GraphLib/device.py` and remains available
+through `GraphLib.dglutil`. It uses the requested device and keeps the original
+attribute if its transfer fails. The graph is modified in place; earlier successful
+transfers are not rolled back. These tests use graph/tensor protocol doubles and do
+not require DGL or validate GPU execution or model training.
+
 ## License
 
 See [LICENSE](LICENSE).

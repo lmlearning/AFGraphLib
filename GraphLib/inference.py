@@ -5,9 +5,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 from dgl import DGLGraph
 import networkx as nx
-from dglutil import make_dgl_graph, merge_graphs, send_graph_to_device, load_graph
-from util import parseTGF,get_features, read_solution_file, get_credulous_labels, get_masks,getRandomBatch, load_ckp
-from model import GCN
+if __package__:
+    from .dglutil import make_dgl_graph, merge_graphs, send_graph_to_device, load_graph
+    from .util import parseTGF, get_features, read_solution_file, get_credulous_labels, get_masks, getRandomBatch, load_ckp
+    from .model import GCN
+else:
+    from dglutil import make_dgl_graph, merge_graphs, send_graph_to_device, load_graph
+    from util import parseTGF, get_features, read_solution_file, get_credulous_labels, get_masks, getRandomBatch, load_ckp
+    from model import GCN
 import argparse
 import pickle
 import numpy as np
@@ -187,6 +192,3 @@ def detect_admbuster(nx_graph):
         return False
     else:
         return True
-            
-        
-            

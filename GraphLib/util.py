@@ -6,7 +6,10 @@ import torch.nn.functional as F
 from dgl import DGLGraph
 import networkx as nx
 from dgl.nn.pytorch import GraphConv
-from model import GCN
+if __package__:
+    from .model import GCN
+else:
+    from model import GCN
 import numpy as np
 import shutil
 

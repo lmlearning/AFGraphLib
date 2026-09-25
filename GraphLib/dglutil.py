@@ -11,9 +11,13 @@ import torch.nn.functional as F
 from dgl import DGLGraph
 import networkx as nx
 from dgl.nn.pytorch import GraphConv
-from model import GCN
 import numpy as np
-from util import parseTGF,parseAPX, get_features, read_solution_file, get_credulous_labels, get_sceptical_labels, get_masks
+if __package__:
+    from .model import GCN
+    from .util import parseTGF, parseAPX, get_features, read_solution_file, get_credulous_labels, get_sceptical_labels, get_masks
+else:
+    from model import GCN
+    from util import parseTGF, parseAPX, get_features, read_solution_file, get_credulous_labels, get_sceptical_labels, get_masks
 
 def load_graph(file_path, cutoff = 10000000, format="tgf"):
     

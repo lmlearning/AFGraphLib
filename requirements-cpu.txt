@@ -1,0 +1,7 @@
+# CPU demo/runtime, tested with Python 3.11 on Linux and Windows.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.7.0+cpu
+dgl==1.1.2
+numpy==1.26.4
+scipy==1.15.3
+networkx==3.4.2

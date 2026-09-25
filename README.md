@@ -1,4 +1,4 @@
-# AFGraphLib
+# AFGraphLib: Graph Learning for Abstract Argumentation
 
 Graph learning tools and research materials for **abstract argumentation**: representing arguments and attacks as graphs, then learning to predict argument acceptance.
 

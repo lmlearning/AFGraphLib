@@ -1,3 +1,8 @@
+if __package__:
+    from .device import send_graph_to_device
+else:  # Legacy scripts import dglutil from GraphLib directly.
+    from device import send_graph_to_device
+
 import dgl
 import dgl.function as fn
 import torch as th
@@ -70,15 +75,3 @@ def merge_graphs(graphs, feature_arrays, label_arrays, training_masks):
     labels   = np.concatenate(label_arrays)
     training_masks = np.concatenate(training_masks)
     return g, features, labels, training_masks
-
-def send_graph_to_device(g, device):
-    # nodes
-    labels = g.node_attr_schemes()
-    for l in labels.keys():
-        g.ndata[l] = g.ndata.pop(l).to(DEVICE, non_blocking=True)
-    
-    # edges
-    labels = g.edge_attr_schemes()
-    for l in labels.keys():
-        g.edata[l] = g.edata.pop(l).to(DEVICE, non_blocking=True)
-    return g
